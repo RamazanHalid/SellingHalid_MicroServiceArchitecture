@@ -42,7 +42,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CatalogService", "CatalogSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasketService.Api", "src\Services\BasketService\BasketService.Api\BasketService.Api.csproj", "{8020FBAC-2E3F-45D0-B43F-CC48545145D5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatelogService.Api", "src\Services\CatelogService\CatelogService.Api\CatelogService.Api.csproj", "{D32424BA-C8B5-454A-85A5-5351458129DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService.Api", "src\Services\CatelogService\CatelogService.Api\CatalogService.Api.csproj", "{D32424BA-C8B5-454A-85A5-5351458129DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityService", "IdentityService", "{452ABC35-D006-40B2-88FE-861C6C442385}"
 EndProject
@@ -50,21 +50,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityService.Api", "src\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NotificationService", "NotificationService", "{1D29C3AB-5BA8-4005-A0C9-82DFCA408084}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService", "src\Services\NotificationService\NotificationService\NotificationService.csproj", "{39280008-0333-4AD6-9673-C8197C08FFF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationService", "src\Services\NotificationService\NotificationService\NotificationService.csproj", "{39280008-0333-4AD6-9673-C8197C08FFF7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderService", "OrderService", "{F4422853-6A4F-4AD3-B09E-1D89C72A3E5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Domain", "src\Services\OrderService\OrderService.Domain\OrderService.Domain.csproj", "{9ED54F6C-277B-4BBF-977A-DD82A307FE09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService.Domain", "src\Services\OrderService\OrderService.Domain\OrderService.Domain.csproj", "{9ED54F6C-277B-4BBF-977A-DD82A307FE09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Applciation", "src\Services\OrderService\OrderService.Applciation\OrderService.Applciation.csproj", "{22D5FF22-61D3-4305-9D6E-751A1203CA30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService.Applciation", "src\Services\OrderService\OrderService.Applciation\OrderService.Applciation.csproj", "{22D5FF22-61D3-4305-9D6E-751A1203CA30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Infrastructure", "src\Services\OrderService\OrderService.Infrastructure\OrderService.Infrastructure.csproj", "{FFF1E1CB-8B1C-4194-BAE7-7B245A2F7E8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService.Infrastructure", "src\Services\OrderService\OrderService.Infrastructure\OrderService.Infrastructure.csproj", "{FFF1E1CB-8B1C-4194-BAE7-7B245A2F7E8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Api", "src\Services\OrderService\OrderService.Api\OrderService.Api.csproj", "{28DC6A3A-D1FB-46C2-AAA0-E91E38B60FEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService.Api", "src\Services\OrderService\OrderService.Api\OrderService.Api.csproj", "{28DC6A3A-D1FB-46C2-AAA0-E91E38B60FEE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PaymentService", "PaymentService", "{4AD4E2D3-E5B2-412A-A438-66C4F4728955}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentService.Api", "src\Services\PaymentService\PaymentService.Api\PaymentService.Api.csproj", "{7E58E1F3-0112-4718-8767-31752E134694}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentService.Api", "src\Services\PaymentService\PaymentService.Api\PaymentService.Api.csproj", "{7E58E1F3-0112-4718-8767-31752E134694}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
