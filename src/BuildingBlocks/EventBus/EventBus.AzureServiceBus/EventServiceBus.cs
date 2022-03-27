@@ -1,5 +1,5 @@
-﻿using EventBust.Base;
-using EventBust.Base.Events;
+﻿using EventBus.Base;
+using EventBus.Base.Events;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Management;
 using Microsoft.Extensions.Logging;

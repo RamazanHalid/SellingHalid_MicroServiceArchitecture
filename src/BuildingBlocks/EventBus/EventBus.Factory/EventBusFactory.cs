@@ -1,7 +1,9 @@
-﻿using EventBus.AzureServiceBus;
+﻿
+
+using EventBus.AzureServiceBus;
+using EventBus.Base;
+using EventBus.Base.Abstraction;
 using EventBus.RabbitMQ;
-using EventBust.Base;
-using EventBust.Base.Abstraction;
 using System;
 
 namespace EventBus.Factory
@@ -10,9 +12,9 @@ namespace EventBus.Factory
     {
         public static IEventBus Create(EventBusConfig config, IServiceProvider serviceProvider)
         {
-            return config.EventBusType switch
+            return config.EventBusype switch
             {
-                EventBusType.AzureServiceBus => new EventServiceBus(config, serviceProvider),
+                EventBusype.AzureServiceBus => new EventServiceBus(config, serviceProvider),
                 _ => new EventBusRabbitMQ(config, serviceProvider),
             };
         }

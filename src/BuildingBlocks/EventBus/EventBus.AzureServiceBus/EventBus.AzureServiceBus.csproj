@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EventBust.Base\EventBust.Base.csproj" />
+    <ProjectReference Include="..\EventBus.Base\EventBus.Base.csproj" />
   </ItemGroup>
 
 </Project>

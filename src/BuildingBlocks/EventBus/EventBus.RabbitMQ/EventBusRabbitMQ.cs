@@ -1,5 +1,5 @@
-﻿using EventBust.Base;
-using EventBust.Base.Events;
+﻿using EventBus.Base;
+using EventBus.Base.Events;
 using Newtonsoft.Json;
 using Polly;
 using RabbitMQ.Client;
