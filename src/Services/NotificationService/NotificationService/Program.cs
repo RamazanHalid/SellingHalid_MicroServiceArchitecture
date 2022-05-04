@@ -1,12 +1,87 @@
-﻿using System;
+﻿using EventBus.Base;
+using EventBus.Base.Abstraction;
+using EventBus.Factory;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NotificationService.IntegrationEvents.EventHandlers;
+using NotificationService.IntegrationEvents.Events;
+using RabbitMQ.Client;
+using Serilog;
+using System;
 
 namespace NotificationService
 {
-    internal class Program
+    class Program
     {
+        private static string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var services = new ServiceCollection();
+
+            ConfigureServices(services);
+            services.AddLogging(configure =>
+            {
+                configure.AddConsole();
+             });
+
+            //Log.Logger = new LoggerConfiguration()
+            //    .ReadFrom.Configuration(serilogConfiguration)
+            //    .CreateLogger();
+
+            var sp = services.BuildServiceProvider();
+
+            IEventBus eventBus = sp.GetRequiredService<IEventBus>();
+
+            eventBus.Subscribe<OrderPaymentSuccessIntegrationEvent, OrderPaymentSuccessIntegrationEventHandler>();
+            eventBus.Subscribe<OrderPaymentFailedIntegrationEvent, OrderPaymentFailedIntegrationEventHandler>();
+
+            Console.WriteLine("Application is Running....");
+            Console.ReadLine();
+            //Log.Logger.Information("Application is Running....");
+        }
+
+        private static void ConfigureServices(ServiceCollection services)
+        {
+            services.AddTransient<OrderPaymentFailedIntegrationEventHandler>();
+            services.AddTransient<OrderPaymentSuccessIntegrationEventHandler>();
+
+            services.AddSingleton(sp =>
+            {
+                EventBusConfig config = new()
+                {
+                    ConnectionRetryCount = 5,
+                    EventNameSuffix = "IntegrationEvent",
+                    SubscriberClientAppName = "NotificationService",
+                    EventBusType = EventBusType.RabbitMQ,
+
+                    Connection = new ConnectionFactory()
+                    {
+                        UserName = "guest",
+                        Password = "guest",
+                        VirtualHost = "/",
+                        HostName = "20.113.66.240",
+                        Port = 15672,
+                        Endpoint = new AmqpTcpEndpoint("20.113.66.240")
+                    }
+                };
+
+                return EventBusFactory.Create(config, sp);
+            });
+        }
+
+        private static IConfiguration serilogConfiguration
+        {
+            get
+            {
+                return new ConfigurationBuilder()
+                    .SetBasePath(System.IO.Directory.GetCurrentDirectory())
+                    .AddJsonFile($"Configurations/serilog.json", optional: false)
+                    .AddJsonFile($"Configurations/serilog.{env}.json", optional: true)
+                    .AddEnvironmentVariables()
+                    .Build();
+            }
         }
     }
 }
