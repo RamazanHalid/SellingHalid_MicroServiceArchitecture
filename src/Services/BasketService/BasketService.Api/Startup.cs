@@ -1,16 +1,21 @@
+using BasketService.Api.Core.Application.Repository;
+using BasketService.Api.Core.Application.Services;
+using BasketService.Api.Extensions;
+using BasketService.Api.Extensions.Registration;
+using BasketService.Api.Infrastructure.Repository;
+using BasketService.Api.IntegrationEvents.EventHanders;
+using BasketService.Api.IntegrationEvents.Events;
+using EventBus.Base;
+using EventBus.Base.Abstraction;
+using EventBus.Factory;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BasketService.Api
 {
@@ -26,7 +31,15 @@ namespace BasketService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            ConfigureServicesExt(services);
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.SetIsOriginAllowed((host) => true)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -35,7 +48,7 @@ namespace BasketService.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -47,6 +60,8 @@ namespace BasketService.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors("CorsPolicy");
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
@@ -54,6 +69,51 @@ namespace BasketService.Api
             {
                 endpoints.MapControllers();
             });
+
+            app.RegisterWithConsul(lifetime, Configuration);
+            ConfigureSubscription(app.ApplicationServices);
+        }
+        private void ConfigureServicesExt(IServiceCollection services)
+        {
+            services.ConfigureAuth(Configuration);
+            services.AddSingleton(sp => sp.ConfigureRedis(Configuration));
+
+            services.ConfigureConsul(Configuration);
+
+            services.AddHttpContextAccessor();
+
+            services.AddTransient<IBasketRepository, RedisBasketRepository>();
+            services.AddTransient<IIdentityService, IdentityService>();
+
+            services.AddSingleton<IEventBus>(sp =>
+            {
+                EventBusConfig config = new()
+                {
+                    ConnectionRetryCount = 5,
+                    EventNameSuffix = "IntegrationEvent",
+                    SubscriberClientAppName = "BasketService",
+                    EventBusType = EventBusType.RabbitMQ,
+                    Connection = new ConnectionFactory()
+                    {
+                        UserName = "guest",
+                        Password = "guest",
+                        VirtualHost = "/",
+                        HostName = "20.113.66.240",
+                        Port = 15672,
+                        Endpoint = new AmqpTcpEndpoint("20.113.66.240")
+                    }
+                };
+
+                return EventBusFactory.Create(config, sp);
+            });
+
+            services.AddTransient<OrderCreatedIntegrationEventHandler>();
+        }
+        private void ConfigureSubscription(IServiceProvider serviceProvider)
+        {
+            var eventBus = serviceProvider.GetRequiredService<IEventBus>();
+
+            eventBus.Subscribe<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventHandler>();
         }
     }
 }
