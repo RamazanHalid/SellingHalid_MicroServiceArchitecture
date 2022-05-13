@@ -24,7 +24,7 @@ namespace NotificationService.IntegrationEvents.EventHandlers
             // Send Fail Notification (Sms, EMail, Push)
 
             _logger.LogInformation($"Order Payment failed with OrderId: {@event.OrderId}, ErrorMessage: {@event.ErrorMessage}");
-
+            Console.WriteLine($"Order Payment failed with OrderId: {@event.OrderId}, ErrorMessage: {@event.ErrorMessage}");
             return Task.CompletedTask;
         }
     }

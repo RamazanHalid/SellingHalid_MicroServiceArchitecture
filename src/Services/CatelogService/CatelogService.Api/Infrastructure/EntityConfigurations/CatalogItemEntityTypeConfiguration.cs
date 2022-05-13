@@ -1,4 +1,4 @@
-﻿using CatalogService.Api.Core.Domain.Entities;
+﻿using CatalogService.Api.Core.Domain;
 using CatalogService.Api.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -13,7 +13,7 @@ namespace CatalogService.Api.Infrastructure.EntityConfigurations
             builder.ToTable("Catalog", CatalogContext.DEFAULT_SCHEMA);
 
             builder.Property(ci => ci.Id)
-                .UseHiLo("catalog_hilo")
+                //.UseHiLo("catalog_hilo")
                 .IsRequired();
 
             builder.Property(ci => ci.Name)

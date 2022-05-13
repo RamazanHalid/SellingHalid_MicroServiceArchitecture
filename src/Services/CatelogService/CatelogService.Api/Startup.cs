@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CatelogService.Api
+namespace CatalogService.Api
 {
     public class Startup
     {
@@ -43,7 +43,7 @@ namespace CatelogService.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -67,6 +67,7 @@ namespace CatelogService.Api
             {
                 endpoints.MapControllers();
             });
+            app.RegisterWithConsul(lifetime, Configuration);
         }
     }
 }

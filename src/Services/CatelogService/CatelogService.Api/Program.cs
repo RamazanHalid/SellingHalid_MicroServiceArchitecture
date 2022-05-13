@@ -13,7 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CatelogService.Api
+namespace CatalogService.Api
 {
     public class Program
     {
@@ -24,22 +24,9 @@ namespace CatelogService.Api
             get
             {
                 return new ConfigurationBuilder()
-                    .SetBasePath(System.IO.Directory.GetCurrentDirectory())
-                    .AddJsonFile($"Configurations/appsettings.json", optional: false)
-                    .AddJsonFile($"Configurations/appsettings.{env}.json", optional: true)
-                    .AddEnvironmentVariables()
-                    .Build();
-            }
-        }
-
-        private static IConfiguration serilogConfiguration
-        {
-            get
-            {
-                return new ConfigurationBuilder()
-                    .SetBasePath(System.IO.Directory.GetCurrentDirectory())
-                    .AddJsonFile($"Configurations/serilog.json", optional: false)
-                    .AddJsonFile($"Configurations/serilog.{env}.json", optional: true)
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile($"appsettings.json", optional: false)
+                    .AddJsonFile($"appsettings.{env}.json", optional: true)
                     .AddEnvironmentVariables()
                     .Build();
             }
@@ -76,13 +63,6 @@ namespace CatelogService.Api
                     .SeedAsync(context, env, logger)
                     .Wait();
             });
-
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(serilogConfiguration)
-                .CreateLogger();
-
-            Log.Logger.Information("Application is Running....");
-
             host.Run();
         }
 

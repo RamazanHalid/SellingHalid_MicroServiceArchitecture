@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.Client;
 using System;
@@ -21,9 +22,11 @@ namespace BasketService.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly ILogger<Startup> logger;
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             Configuration = configuration;
+            this.logger = logger;
         }
 
         public IConfiguration Configuration { get; }
@@ -50,6 +53,11 @@ namespace BasketService.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
+            logger.LogInformation("System up and running - from configure {TestParam}", "Ramazan");
+            logger.LogInformation("**************************************************************** \n " +
+                "*********************************************************** \n " +
+                "**************************************************************");
+            logger.LogDebug("System up and running - from configure {TestParam}", "Ramazan");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -57,7 +65,7 @@ namespace BasketService.Api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BasketService.Api v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseCors("CorsPolicy");
@@ -94,13 +102,8 @@ namespace BasketService.Api
                     SubscriberClientAppName = "BasketService",
                     EventBusType = EventBusType.RabbitMQ,
                     Connection = new ConnectionFactory()
-                    {
-                        UserName = "guest",
-                        Password = "guest",
-                        VirtualHost = "/",
-                        HostName = "20.113.66.240",
-                        Port = 15672,
-                        Endpoint = new AmqpTcpEndpoint("20.113.66.240")
+                    { 
+                        HostName = "c_rabbitmq" 
                     }
                 };
 

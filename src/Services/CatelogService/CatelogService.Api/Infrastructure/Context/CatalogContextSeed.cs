@@ -1,4 +1,4 @@
-﻿using CatalogService.Api.Core.Domain.Entities;
+﻿using CatalogService.Api.Core.Domain;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using Polly;

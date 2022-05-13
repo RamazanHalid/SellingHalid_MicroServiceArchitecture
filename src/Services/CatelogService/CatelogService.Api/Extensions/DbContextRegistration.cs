@@ -8,7 +8,6 @@ using CatalogService.Api.Infrastructure.Context;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using CatelogService.Api;
 
 namespace CatalogService.Api.Extensions
 {
@@ -19,12 +18,7 @@ namespace CatalogService.Api.Extensions
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<CatalogContext>(options =>
                 {
-                    options.UseSqlServer(configuration["ConnectionString"],
-                                         sqlServerOptionsAction: sqlOptions =>
-                                         {
-                                             sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
-                                             sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
-                                         });
+                    options.UseSqlServer(configuration["ConnectionString"]);
                 });
 
             return services;

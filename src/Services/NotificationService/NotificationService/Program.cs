@@ -39,7 +39,7 @@ namespace NotificationService
 
             Console.WriteLine("Application is Running....");
             Console.ReadLine();
-            //Log.Logger.Information("Application is Running....");
+            Log.Logger.Information("Application is Running....");
         }
 
         private static void ConfigureServices(ServiceCollection services)
@@ -57,13 +57,8 @@ namespace NotificationService
                     EventBusType = EventBusType.RabbitMQ,
 
                     Connection = new ConnectionFactory()
-                    {
-                        UserName = "guest",
-                        Password = "guest",
-                        VirtualHost = "/",
-                        HostName = "20.113.66.240",
-                        Port = 15672,
-                        Endpoint = new AmqpTcpEndpoint("20.113.66.240")
+                    { 
+                        HostName = "c_rabbitmq" 
                     }
                 };
 

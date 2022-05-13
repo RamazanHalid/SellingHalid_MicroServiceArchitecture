@@ -1,5 +1,5 @@
 ﻿using CatalogService.Api.Core.Application.ViewModels;
-using CatalogService.Api.Core.Domain.Entities;
+using CatalogService.Api.Core.Domain;
 using CatalogService.Api.Infrastructure;
 using CatalogService.Api.Infrastructure.Context;
 using Microsoft.AspNetCore.Mvc;

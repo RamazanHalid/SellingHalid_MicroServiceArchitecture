@@ -1,4 +1,4 @@
-﻿namespace CatalogService.Api.Core.Domain.Entities
+﻿namespace CatalogService.Api.Core.Domain
 {
     public class CatalogItem
     {

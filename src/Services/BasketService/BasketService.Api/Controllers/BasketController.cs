@@ -17,7 +17,7 @@ namespace BasketService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository repository;
@@ -126,6 +126,14 @@ namespace BasketService.Api.Controllers
         public async Task DeleteBasketByIdAsync(string id)
         {
             await repository.DeleteBasketAsync(id);
+        }
+        [HttpGet("Deneme")]
+        public IActionResult Deneme(string d)
+        {
+            _logger.LogInformation(d);
+            _logger.LogDebug("Debug " + d);
+
+            return Ok(d);
         }
     }
 }

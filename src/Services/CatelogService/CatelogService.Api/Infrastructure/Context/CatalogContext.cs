@@ -1,4 +1,4 @@
-﻿using CatalogService.Api.Core.Domain.Entities;
+﻿using CatalogService.Api.Core.Domain;
 using CatalogService.Api.Infrastructure.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 using System;

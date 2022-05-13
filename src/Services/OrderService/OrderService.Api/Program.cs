@@ -1,26 +1,62 @@
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OrderService.Api.Extensions;
+using OrderService.Infrastructure.Context;
+using OrderService.Persistence.Context;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OrderService.Api
 {
     public class Program
     {
-        public static void Main(string[] args)
+        private static string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+        private static IConfiguration configuration
         {
-            CreateHostBuilder(args).Build().Run();
+            get
+            {
+                return new ConfigurationBuilder()
+                    .SetBasePath(System.IO.Directory.GetCurrentDirectory())
+                     .AddEnvironmentVariables()
+                    .Build();
+            }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+      
+
+        public static IWebHost BuildWebHost(IConfiguration configuration, string[] args)
+        {
+            return WebHost.CreateDefaultBuilder()
+                .UseDefaultServiceProvider((context, options) =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                });
+                    options.ValidateOnBuild = false;
+                    options.ValidateScopes = false;
+                })
+                .ConfigureAppConfiguration(i => i.AddConfiguration(configuration))
+                .UseStartup<Startup>()
+                  .Build();
+        }
+
+        public static void Main(string[] args)
+        {
+            var host = BuildWebHost(configuration, args);
+ 
+            host.MigrateDbContext<OrderDbContext>((context, services) =>
+            {
+                var logger = services.GetService<ILogger<OrderDbContext>>();
+
+                var dbContextSeeder = new OrderDbContextSeed();
+                dbContextSeeder.SeedAsync(context, logger)
+                    .Wait();
+            });
+
+
+            host.Run();
+        }
     }
 }
+    
