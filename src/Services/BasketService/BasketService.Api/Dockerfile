@@ -16,7 +16,7 @@ COPY ["src/BuildingBlocks/EventBus/EventBus.Base/EventBus.Base.csproj", "src/Bui
 COPY ["src/BuildingBlocks/EventBus/EventBus.RabbitMQ/EventBus.RabbitMQ.csproj", "src/BuildingBlocks/EventBus/EventBus.RabbitMQ/"]
 RUN dotnet restore "src/Services/BasketService/BasketService.Api/BasketService.Api.csproj"
 COPY . .
-WORKDIR "/src/src/Services/BasketService/BasketService.Api"
+WORKDIR "/src/Services/BasketService/BasketService.Api"
 RUN dotnet build "BasketService.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
