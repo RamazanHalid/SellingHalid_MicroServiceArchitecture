@@ -54,7 +54,7 @@ services:
     image: ${DOCKER_REGISTRY-}basketserviceapi
     build:
       context: .
-      dockerfile: src\Services\BasketService\BasketService.Api\Dockerfile
+      dockerfile: src\Services\BasketService\BasketService.Api\Dockerfile 
 
   paymentservice.api:
     container_name: c_paymentservice
