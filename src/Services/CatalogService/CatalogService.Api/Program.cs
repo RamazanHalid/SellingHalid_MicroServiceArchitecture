@@ -46,8 +46,7 @@ namespace CatalogService.Api
                 .UseStartup<Startup>()
                 .ConfigureLogging(i => i.ClearProviders())
                 .UseSerilog()
-
-                 .Build();
+                .Build();
         }
 
         public static void Main(string[] args)
