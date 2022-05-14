@@ -52,7 +52,7 @@ namespace WebApp
 
             builder.Services.AddHttpClient("ApiGatewayHttpClient", client =>
             {
-                client.BaseAddress = new Uri("http://localhost:5000/");
+                client.BaseAddress = new Uri("http://20.113.66.240:5000/");
             })
                 .AddHttpMessageHandler<AuthTokenHandler>();
 
