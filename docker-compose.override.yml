@@ -161,8 +161,8 @@ services:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=Halid35!
     volumes:
-      - sqlserver_data:/var/opt/mssql/data
-      - sqlserver_log:/var/opt/mssql/log
+      - /opt/app_data/sqlserver_data:/var/opt/mssql/data
+      - /opt/app_data/sqlserver_log:/var/opt/mssql/log
     networks:
       - net_backendservices
 
@@ -171,7 +171,7 @@ services:
       - 5672:5672
       - 15672:15672
     volumes:
-      - rabbitmq:/var/lib/rabbitmq
+      - /opt/app_data/rabbitmq:/var/lib/rabbitmq
     networks:
       - net_backendservices
       - net_apigateway
