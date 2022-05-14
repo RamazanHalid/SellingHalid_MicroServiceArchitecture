@@ -1,5 +1,5 @@
 # SellingHalid_MicroServiceArchitecture
-<a target="_blank" src="http://20.113.66.240:2000/">Please click here for going to project!</a>
+Here is the project link: http://20.113.66.240:2000/
 </br>
 Here is the project visiualiton.
 </br>
@@ -24,7 +24,7 @@ I holds basket items in Redis which is a cache database.
 I used Serilog and Graylog for logging.
 </br>
 
-There are two Servicebus for comminicated among services. RabbitMQ and AzureService.
+There are two EventBus for comminicated among services. RabbitMQ and AzureService.
 </br>
 
 Microsoft Sql used for hold information in database.
