@@ -18,19 +18,19 @@ namespace OrderService.Application.Features.Commands.CreateOrder
     {
         private readonly IOrderRepository orderRepository;
         private readonly IEventBus eventBus;
-        //private readonly ILogger<CreateOrderCommandHandler> logger;
+        private readonly ILogger<CreateOrderCommandHandler> logger;
 
 
         public CreateOrderCommandHandler(IOrderRepository orderRepository, IEventBus eventBus)
         {
             this.orderRepository = orderRepository;
             this.eventBus = eventBus;
-            //this.logger = logger;
+            this.logger = logger;
         }
 
         public async Task<bool> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            //logger.LogInformation("CreateOrderCommandHandler -> Handle method invoked");
+            logger.LogInformation("CreateOrderCommandHandler -> Handle method invoked");
 
             var addr = new Address(request.Street, request.City, request.State, request.Country, request.ZipCode);
 
@@ -45,13 +45,13 @@ namespace OrderService.Application.Features.Commands.CreateOrder
             await orderRepository.AddAsync(dbOrder);
             await orderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
-            //logger.LogInformation("CreateOrderCommandHandler -> dbOrder saved");
+            logger.LogInformation("CreateOrderCommandHandler -> dbOrder saved");
 
             var orderStartedIntegrationEvent = new OrderStartedIntegrationEvent(request.UserName, dbOrder.Id);
 
             eventBus.Publish(orderStartedIntegrationEvent);
 
-            //logger.LogInformation("CreateOrderCommandHandler -> OrderStartedIntegrationEvent fired");
+            logger.LogInformation("CreateOrderCommandHandler -> OrderStartedIntegrationEvent fired");
 
             return true;
         }
