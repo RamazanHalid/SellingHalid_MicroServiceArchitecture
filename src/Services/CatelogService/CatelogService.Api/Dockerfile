@@ -6,10 +6,10 @@ EXPOSE 5004
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["src/Services/CatalogService/CatalogService.Api/CatalogService.Api.csproj", "src/Services/CatalogService/CatalogService.Api/"]
-RUN dotnet restore "src/Services/CatalogService/CatalogService.Api/CatalogService.Api.csproj"
+COPY ["src/Services/CatalogService/CatelogService.Api/CatalogService.Api.csproj", "src/Services/CatalogService/CatelogService.Api/"]
+RUN dotnet restore "src/Services/CatalogService/CatelogService.Api/CatalogService.Api.csproj"
 COPY . .
-WORKDIR "/src/src/Services/CatalogService/CatalogService.Api"
+WORKDIR "/src/src/Services/CatalogService/CatelogService.Api"
 RUN dotnet build "CatalogService.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
