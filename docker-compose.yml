@@ -46,7 +46,7 @@ services:
     image: ${DOCKER_REGISTRY-}catalogserviceapi
     build:
       context: .
-      dockerfile: /src/Services/CatalogService/CatalogService.Api/Dockerfile
+      dockerfile: src/Services/CatalogService/CatalogService.Api/Dockerfile
 
 
   basketservice.api:
