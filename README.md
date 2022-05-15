@@ -1,10 +1,10 @@
 # SellingHalid_MicroServiceArchitecture
 ## Description
 SellingHalid project is a Microservice project. Project purpose is Selling stuff application.
-Here is the project link: http://20.113.66.240:2000/
+Here is the project link: http://20.113.66.240:2000/ .
 
-</br>
-### Here is the project visiualiton.
+
+<h3> Here is the project visiualiton. </h3>
 </br>
 <img src="https://docs.microsoft.com/tr-tr/dotnet/architecture/microservices/multi-container-microservice-net-applications/media/microservice-application-design/eshoponcontainers-reference-application-architecture.png"/>
 </br>
